@@ -3,12 +3,21 @@ window.onload = function() {
     var countdownElement = document.getElementById('countdown');
     var startButton = document.getElementById('startBtn');
     var my_audio = document.getElementById("audio");
+    let countdown_name = "";
     
     startButton.addEventListener('click', function() {
         startButton.setAttribute("disabled", "disabled");
         var durationInput = document.getElementById('duration');
         let initialDuration = parseInt(durationInput.value, 10);
         var duration = initialDuration * 60;
+        
+        tmp_countdown_name = document.getElementById("countdown-name").value;
+        if(tmp_countdown_name)
+            countdown_name = tmp_countdown_name
+
+        end_countdown_string = "Countdown of " + initialDuration + " minutes finished"
+        if(countdown_name)
+            end_countdown_string = "Countdown \"" + countdown_name + "\" of " + initialDuration + " minutes finished"
         
         if (!isNaN(duration) && duration > 0) {
             var targetDate = new Date().getTime() + (duration * 1000);
@@ -32,9 +41,10 @@ window.onload = function() {
                     window.focus(); // Focus the browser tab
                     my_audio.currentTime = "0";
                     my_audio.play();
-                    alert("Countdown of " + initialDuration + " minutes finished");
+                    
+                    alert(end_countdown_string);
                     document.title = title;
-                    countdownElement.innerHTML = 'Countdown Finished';
+                    countdownElement.innerHTML = end_countdown_string
                     startButton.removeAttribute("disabled");
                 }
             }, 1000);
